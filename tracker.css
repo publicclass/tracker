@@ -1,0 +1,40 @@
+.tracker {
+  width: 600px;
+  font-size: 0;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tracker.timeline {
+  height: 200px;
+}
+.tracker.frames {
+  height: 30px;
+}
+.tracker li {
+  margin-left: 1px;
+  width: 5px;
+  height: 100%;
+  background: lightgray;
+  display: inline-block;
+  position: relative;
+}
+.tracker li:hover {
+  background: gray;
+}
+.tracker li .value {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: darkgray;
+}
+.tracker.timeline li .value {
+  bottom: 0;
+  position: absolute;
+  border-top: 2px solid black;
+  background: none;
+}
+.tracker .value:nth-child(2) {
+  background-color: black;
+}

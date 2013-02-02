@@ -1,0 +1,18 @@
+{
+  "name": "tracker",
+  "repo": "publicclass/tracker",
+  "description": "A little event tracker",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {
+    "jquery": "*"
+  },
+  "development": {},
+  "license": "MIT",
+  "scripts": [
+    "index.js"
+  ],
+  "styles": [
+    "tracker.css"
+  ]
+}
