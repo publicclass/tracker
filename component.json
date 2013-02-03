@@ -5,9 +5,12 @@
   "version": "0.0.1",
   "keywords": [],
   "dependencies": {
-    "component/zepto": "*"
+    "component/jquery": "*",
+    "component/emitter": "*"
   },
-  "development": {},
+  "development": {
+    "component/tip": "*"
+  },
   "license": "MIT",
   "scripts": [
     "index.js"

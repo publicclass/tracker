@@ -1,4 +1,5 @@
-var $ = require('zepto-component');
+var Emitter = require('emitter')
+  , $ = require('jquery');
 
 module.exports = Tracker;
 
@@ -9,16 +10,21 @@ function Tracker(element,type,opts){
   if( !(this instanceof Tracker) )
     return new Tracker(element,type,opts);
 
+  Emitter(this)
+
   this.element = $(element);
   this.visible = 0;
   this.history = [];
   this.meta = [];
 
   this.element.on('mouseover','li',function(e){
-    var li = e.currentTarget
-      , tr = e.target;
-    // TODO tooltíp of meta, timestamp and type or value
-  })
+    if( e.target.nodeName == 'SPAN' ){
+      var li = $(e.currentTarget);
+      var tr = $(e.target);
+      var index = tr.data('meta-index')
+      this.emit('meta',this.meta[index],tr.data('type') || tr.data('value'),li.data('ts'))
+    }
+  }.bind(this))
 
   this.element.addClass('tracker').addClass(type);
 
@@ -36,6 +42,7 @@ function Tracker(element,type,opts){
     this.frame = function(type,meta){
       var trace = traceFragment.clone();
       trace.addClass(type)
+      trace.data('type',type);
       if( meta ){
         trace.data('meta-index',metaIndex);
         this.meta[metaIndex] = meta;
@@ -51,8 +58,10 @@ function Tracker(element,type,opts){
     this.count = function(type,meta){
       var trace = traceFragment.clone();
       trace.css('bottom',traces*6+'px');
-      if( type )
+      if( type ){
         trace.addClass(type)
+        trace.data('type',type);
+      }
       if( meta ){
         trace.data('meta-index',metaIndex);
         this.meta[metaIndex] = meta;

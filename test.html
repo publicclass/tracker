@@ -16,18 +16,22 @@
 <script>
 
 var Tracker = require('tracker')
-  , $ = require('component-zepto');
+  , $ = require('component-jquery');
 
 var tot = 0, len = 0, max = -Infinity, min = Infinity;
-
-var stopped = false;
-$('body').on('click','.tracker',function(){stopped = !stopped})
-
 
 var empty = new Tracker('#empty','timeline')
 var stack = new Tracker('#stack','stack')
 var events = new Tracker('#frames','frames')
 var timeline = new Tracker('#timeline','timeline',{min:0,max:100})
+
+var stopped = false;
+$('.tracker').mouseenter(function(){stopped = true})
+$('.tracker').mouseleave(function(){stopped = false})
+
+events.on('meta',function(meta,ts,data){
+  console.log(arguments)
+})
 
 requestAnimationFrame(function update(){
   requestAnimationFrame(update);
