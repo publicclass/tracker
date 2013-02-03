@@ -28,6 +28,7 @@ function Tracker(element,type,opts){
   opts.max = opts.max || Number.MAX_VALUE;
 
   var currentFrame = frameFragment.clone()
+    , traces = 0
     , metaIndex = 0
     , metaCount = 16383; // 2^14-1
 
@@ -41,6 +42,7 @@ function Tracker(element,type,opts){
         metaIndex = (metaIndex + 1) & metaCount;
       }
       currentFrame.append(trace)
+      traces++;
       return this;
     }
   }
@@ -58,6 +60,7 @@ function Tracker(element,type,opts){
         metaIndex = (metaIndex + 1) & metaCount;
       }
       currentFrame.append(trace)
+      traces++;
       return this;
     }
 
@@ -71,17 +74,20 @@ function Tracker(element,type,opts){
         metaIndex = (metaIndex + 1) & metaCount;
       }
       currentFrame.append(trace)
+      traces++;
       return this;
     }
   }
 
   this.update = function(){
-    // TODO Resize the width of the frame to fit each trace next to each other
-    // $('.value',currentFrame).css('width',5/$('.value',currentFrame).length)
 
     // Resize height of frames to fit each trace on top of each other
-    if( type === 'frames' )
-      currentFrame.children().css('height',(100/currentFrame.children().length)+'%')
+    if( type === 'frames' && traces )
+      currentFrame.children().css('height',(100/traces)+'%')
+
+    // TODO Resize the width of the frame to fit each trace next to each other
+    // if( type === 'timeline' && traces )
+    //   currentFrame.children().css('width',(5/traces)+'px')
 
     currentFrame.data('ts',Date.now())
 
@@ -93,6 +99,7 @@ function Tracker(element,type,opts){
     }
 
     currentFrame = frameFragment.clone();
+    traces = 0;
     return this;
   }
 }
