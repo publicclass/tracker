@@ -1,4 +1,4 @@
-var $ = require('jquery');
+var $ = require('zepto-component');
 
 module.exports = Tracker;
 
