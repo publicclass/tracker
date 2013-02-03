@@ -22,9 +22,8 @@ function Tracker(element,type,opts){
 
   this.element.addClass('tracker').addClass(type);
 
-  opts = opts || {}
-  opts.type = opts.type || 'frames';
-  opts.visible = opts.visible || 100;
+  opts = opts || {};
+  opts.visible = opts.visible || 100;
   opts.min = opts.min || Number.MIN_VALUE;
   opts.max = opts.max || Number.MAX_VALUE;
 
