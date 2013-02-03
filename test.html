@@ -1,0 +1,52 @@
+<link rel="stylesheet" type="text/css" href="build/build.css">
+
+<ol id='timeline' class='tracker'></ol>
+<ol id='frames' class='tracker'></ol>
+
+<script src='build/build.js'></script>
+<script>
+
+var Tracker = require('tracker')
+  , $ = require('component-zepto');
+
+var tot = 0, len = 0, max = -Infinity, min = Infinity;
+
+var stopped = false;
+$('body').on('click','.tracker',function(){stopped = !stopped})
+
+
+var events = new Tracker('#frames','frames')
+var timeline = new Tracker('#timeline','timeline',{min:0,max:100})
+
+requestAnimationFrame(function update(){
+  requestAnimationFrame(update);
+
+  if( !stopped ){
+    var v = Math.round(Math.random()*100);
+    var t = performance.now();
+
+    if( Math.random() < .2 )
+      events.frame('type1')
+
+    if( Math.random() < .1 )
+      events.frame('type2',{some:'info'})
+
+    timeline.value(v)
+    timeline.value(v/2)
+
+    events.update()
+    timeline.update()
+
+    tot += Math.round((performance.now()-t)*1000);
+    len += 1;
+  }
+})
+interval = setInterval(function(){
+  var avg = Math.round(tot/len);
+  if( avg > max ) max = avg;
+  if( avg < min ) min = avg;
+  console.log('%s > %s < %s',min,avg,max)
+  if( len > 1000 )
+    clearInterval(interval);
+},100)
+</script>
