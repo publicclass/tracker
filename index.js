@@ -47,9 +47,25 @@ function Tracker(element,type,opts){
     }
   }
 
+  if( type === 'stack' ){
+    this.count = function(type,meta){
+      var trace = traceFragment.clone();
+      trace.css('bottom',traces*6+'px');
+      if( type )
+        trace.addClass(type)
+      if( meta ){
+        trace.data('meta-index',metaIndex);
+        this.meta[metaIndex] = meta;
+        metaIndex = (metaIndex + 1) & metaCount;
+      }
+      currentFrame.append(trace)
+      traces++;
+      return this;
+    }
+  }
+
   if( type === 'timeline' ){
     this.value = function(value,meta){
-      opts.type = 'timeline';
       var v = (value - opts.min) / (opts.max-opts.min) * 100
       var trace = traceFragment.clone();
       trace.css('height',v+'%');
@@ -65,7 +81,6 @@ function Tracker(element,type,opts){
     }
 
     this.percent = function(percent,meta){
-      opts.type = 'timeline';
       var trace = traceFragment.clone();
       trace.css('height',percent+'%')
       if( meta ){

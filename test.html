@@ -1,7 +1,15 @@
 <link rel="stylesheet" type="text/css" href="build/build.css">
+<style>
+
+  .tracker li .value.type1 { background: cyan; }
+  .tracker li .value.type2 { background: blue; }
+  .tracker li .value.type3 { background: pink; }
+
+</style>
 
 <ol id='timeline' class='tracker'></ol>
 <ol id='frames' class='tracker'></ol>
+<ol id='stack' class='tracker'></ol>
 
 <script src='build/build.js'></script>
 <script>
@@ -15,6 +23,7 @@ var stopped = false;
 $('body').on('click','.tracker',function(){stopped = !stopped})
 
 
+var stack = new Tracker('#stack','stack')
 var events = new Tracker('#frames','frames')
 var timeline = new Tracker('#timeline','timeline',{min:0,max:100})
 
@@ -25,6 +34,13 @@ requestAnimationFrame(function update(){
     var v = Math.round(Math.random()*100);
     var t = performance.now();
 
+    while( Math.random() > .3 ){
+      if( Math.random() < .2 )
+        stack.count();
+      else
+        stack.count('type3');
+    }
+
     if( Math.random() < .2 )
       events.frame('type1')
 
@@ -34,6 +50,7 @@ requestAnimationFrame(function update(){
     timeline.value(v)
     timeline.value(v/2)
 
+    stack.update()
     events.update()
     timeline.update()
 
