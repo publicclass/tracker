@@ -95,6 +95,8 @@ function Tracker(element,type,opts){
   }
 
   this.update = function(){
+    if( !this.element.length )
+      return this;
 
     // Resize height of frames to fit each trace on top of each other
     if( type === 'frames' && traces )

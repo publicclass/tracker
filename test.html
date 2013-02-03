@@ -10,6 +10,7 @@
 <ol id='timeline' class='tracker'></ol>
 <ol id='frames' class='tracker'></ol>
 <ol id='stack' class='tracker'></ol>
+<ol id='empty-fail' class='tracker'></ol>
 
 <script src='build/build.js'></script>
 <script>
@@ -23,6 +24,7 @@ var stopped = false;
 $('body').on('click','.tracker',function(){stopped = !stopped})
 
 
+var empty = new Tracker('#empty','timeline')
 var stack = new Tracker('#stack','stack')
 var events = new Tracker('#frames','frames')
 var timeline = new Tracker('#timeline','timeline',{min:0,max:100})
@@ -50,6 +52,7 @@ requestAnimationFrame(function update(){
     timeline.value(v)
     timeline.value(v/2)
 
+    empty.update()
     stack.update()
     events.update()
     timeline.update()
